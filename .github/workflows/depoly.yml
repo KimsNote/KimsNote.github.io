@@ -44,7 +44,7 @@ jobs:
         uses: sma11black/hexo-action@v1.0.3
         with:
           deploy_key: ${{ secrets.HEXO_DEPLOY_PRI }}
-          user_name: KimNotes
+          user_name: KimsNote
           user_email: 1019327414@qq.com
           commit_msg: ${{ github.event.head_commit.message }} deploy
       - name: Get the output
