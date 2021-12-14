@@ -44,9 +44,9 @@ jobs:
         uses: sma11black/hexo-action@v1.0.3
         with:
           deploy_key: ${{ secrets.HEXO_DEPLOY_PRI }}
-          user_name: ChenLiheng
-          user_email: chenliheng1201@gmail.com
-          commit_msg: ${{ github.event.head_commit.message }}ion)
+          user_name: KimNotes
+          user_email: 1019327414@qq.com
+          commit_msg: ${{ github.event.head_commit.message }} deploy
       - name: Get the output
         run: |
           echo "${{ steps.deploy.outputs.notify }}"
