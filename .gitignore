@@ -6,3 +6,5 @@ node_modules/
 public/
 .deploy*/
 themes
+hexo-deploy-key-kim
+hexo-deploy-key-kim.pub

@@ -137,5 +137,5 @@ markdown:
 
 deploy:
   type: 'git'
-  repo: https://github.com/KimsNote/KimsNote.github.io.git
+  repo: git@github.com:KimsNote/KimsNote.github.io.git
   branch: gh-pages
