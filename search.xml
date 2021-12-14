@@ -15,50 +15,6 @@
     </entry>
     
     
-    
-    <entry>
-      <title>操作系统-进程管理</title>
-      <link href="/2021/12/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-      <url>/2021/12/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="进程的描述">进程的描述</h2><h3 id="程序的顺序执行">程序的顺序执行</h3><h4 id="含义">含义</h4><p>先进入内存的程序先执行，在一个程序之前完毕之前，不能执行其他程序（队列 --&gt; 先进先出）</p><h4 id="特点">特点</h4><p><mark>顺序性</mark> <mark>封闭性</mark> <mark>可再现性</mark></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">A[输入一批数据]--&gt;B[处理数据]--&gt;C[打印处理结果]--&gt;A</span><br></pre></td></tr></table></figure><blockquote><p>⚠️ 不能使输入机、处理器和打印机同时忙碌</p></blockquote><h3 id="程序的并发执行">程序的并发执行</h3><h4 id="含义-2">含义</h4><p>程序并发执行是指在**<span style='color: red'>同一时间间隔内</span>**运行多个程序。一个程序执行结束前，可以运行其他程序。</p><p>⭐️ 宏观并行：用户看到的是多个程序同时向前推进</p><p>⭐️ 微观串行：任意时刻一个CPU上只有一个程序在执行</p><h4 id="特点-2">特点</h4><p><mark>间断性</mark>  程序在CPU上执行是时断时续的</p><p><mark>失去封闭性</mark> 系统的状态不再只对正在执行的程序可见</p><p><mark>不可再现性</mark> 同一个程序在输入相同的情况下多次运行，可能出现不同的结果</p><h3 id="进程的概念">进程的概念</h3><h4 id="进程的定义">进程的定义</h4><p>进程是允许并发执行的程序在某个数据集合上的运行过程。</p><p><code>进程=正文段+用户数据段+进程控制块（PCB）</code></p><h4 id="进程的特征">进程的特征</h4><ol><li><strong><span style='color: red'>并发性</span></strong> 多个进程实体能在一段时间间隔内同时运行，并发性是进程和现代操作系统的重要特征</li><li><strong><span style='color: red'>动态性</span></strong> 进程是实体的执行过程<code>执行程序--&gt;创建进程 获得CPU--&gt;执行指令 运行中止--&gt;被撤销</code></li><li><strong><span style='color: red'>独立性</span></strong> 独立运行和资源调度的基本单位</li><li><strong><span style='color: red'>异步性</span></strong> 进程执行时断时续，何时执行，何时暂停都无法预知</li><li><strong><span style='color: red'>结构特征</span></strong> 进程实体包括用户正文段，用户数据段和进程控制块</li></ol><blockquote><p>💡（速记） 发 动 独 异 结构</p></blockquote><h4 id="进程与程序的比较">进程与程序的比较</h4><ol><li><p>程序是具有独立功能的一组指令的集合</p><p><mark>静态</mark> <mark>永久</mark> <mark>指令的集合</mark></p></li><li><p>进程是运行并发执行程序在某个数据集合上的运行过程</p><p><mark>动态</mark> <mark>暂时</mark> <mark>正文段+用户数据段+进程控制块</mark></p></li><li><p>进程是程序的一次执行</p></li><li><p>一个程序可以对应多个进程</p></li><li><p><span style='background: yellow'>❓同一个进程能顺序的执行几个程序</span></p></li></ol><h3 id="进程控制块（PCB）">进程控制块（PCB）</h3><p>进程控制块是**<span style='color: red'>进程实体的一部分</span><strong>，是操作系统中</strong><span style='color: red'>最重要的数据结构</span>**。</p><p>进程控制块中记录了操作系统所需要的，用于描述进程及控制进程运行所需的全部信息</p><ol><li><p><strong>进程标识符信息</strong>   用户唯一标识一个进程</p></li><li><p><strong>处理机状态信息</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">A[通用寄存器]---</span><br><span class="line">B[指令计数器]---</span><br><span class="line">C[程序状态字PSW]---</span><br><span class="line">D[用户指针栈]</span><br></pre></td></tr></table></figure></li><li><p><strong>进程调度信息</strong> 包括进程状态信息、进程优先级和进程调度所需的其他信息</p></li><li><p><strong>进程控制信息</strong> 包括程序和数据的地址、进程同步和通信机制、资源清单、以及链接指针</p></li></ol><h3 id="进程的状态">进程的状态</h3><p><img src="./images/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/image-20211209163543332.png" alt="image-20211209163543332"></p><h3 id="进程的组织">进程的组织</h3><p>进程的组织世界上是进程控制块的组织</p><h4 id="链接方式">链接方式</h4><p>把系统中具有<strong>相同状态</strong>的进程控制块用其中的<strong>链接字</strong>（处理机状态信息中的属性PSW）连成一个队列</p><ol><li>执行指针队列 PCB1</li><li>就绪队列指针 PCB2，PCB4</li><li>阻塞队列指针 PCB3，PCB5</li></ol><blockquote><p>💡 执行指针队列 <strong><span style='color: red'>只能有一个指针</span></strong></p></blockquote><h4 id="索引方式">索引方式</h4><p>系统根据所有进程的状态，建立索引表，索引表的每一个表项指向一个PCB物理块</p><h4 id="进程队列">进程队列</h4><p>把具有相同状态的进程控制块用队列组织起来</p><p>eg: 就绪队列1，就绪队列2，阻塞队列1，I/O 阻塞队列…</p><h2 id="进程的控制">进程的控制</h2><h3 id="进程的创建">进程的创建</h3><img src="images/操作系统-进程管理/image-20211209172152743.png" alt="image-20211209172152743" style="zoom:50%;" /><h4 id="什么情况下需要创建进程">什么情况下需要创建进程</h4><p><mark>用户登录</mark> <mark>作业调度</mark> <mark>提供服务</mark> <mark>应用请求</mark></p><h5 id="※-创建进程的步骤">※ 创建进程的步骤</h5><ol><li>申请空白PCB</li><li>为新进程分配资源</li><li>初始化进程控制块</li><li>将新进程插入到就绪队列</li></ol><h5 id="※-进程被创建时，有两种执行可能">※ 进程被创建时，有两种执行可能</h5><ol><li>父进程与子进程并发执行</li><li>父进程等待，直到某个或全部子进程执行完毕</li></ol><h5 id="※-子进程的地址空间，有两种可能">※ 子进程的地址空间，有两种可能</h5><ol><li>子进程共享父进程的地址空间</li><li>子进程拥有独立地址空间</li></ol><h4 id="什么情况下会进行进程的阻塞">什么情况下会进行进程的阻塞</h4><p><mark>请求系统服务</mark> <mark>启动某种操作</mark> <mark>新数据尚未到达</mark> <mark>无新工作可做</mark></p><h5 id="※完成进程阻塞的过程">※完成进程阻塞的过程</h5><ol><li>将进程的状态改为阻塞态</li><li>将进程插入相应的阻塞队列</li><li>转到进程调度程序，从就绪队列中选择进程为其分配CPU</li></ol><blockquote><p>💡 改状态 ----&gt; 进队列 ----&gt; 进程调度</p></blockquote><h4 id="进程的唤醒">进程的唤醒</h4><h5 id="※进程唤醒的过程">※进程唤醒的过程</h5><ol><li>将进程从阻塞队列移出</li><li>将进程状态由阻塞态改为就绪态</li><li>将进程插入就绪队列</li></ol><blockquote><p>💡 出队列 ----&gt; 改状态 ----&gt; 进就绪队列</p></blockquote><h4 id="什么情况下进程会终止">什么情况下进程会终止</h4><p><mark>进程正常执行完毕</mark></p><h5 id="※-完成进程终止的过程">※ 完成进程终止的过程</h5><ol><li>从进程PCB中读取进程状态</li><li>若进程正在执行，则终止进程的执行</li><li>释放资源</li><li>将终止的进程PCB移出</li></ol><blockquote><p>💡读状态----&gt; 终止进程 ----&gt; 释放资源 ----&gt; 移出PCB</p></blockquote><h2 id="操作系统的内核">操作系统的内核</h2><p>操作系统内核是计算机硬件的第一扩充，内核执行操作系统与硬件关系密切，执行频率高的模块，常驻内存</p><h3 id="内核">内核</h3><h4 id="支撑功能">支撑功能</h4><p><mark>中断处理</mark>、<mark>时钟管理</mark>、<mark>原语操作</mark></p><h4 id="资源管理功能">资源管理功能</h4><p><mark>进程管理</mark>、<mark>存储管理</mark>、<mark>设备管理</mark></p><h3 id="中断">中断</h3><h4 id="含义-3">含义</h4><p>中断是改变处理器执行指令顺序的一种事件。</p><p>出现中断时，计算机停止现在程序的运行，转向对这些中断事件的处理，处理结束后再返回到现在程序的间断处。</p><h4 id="为什么要中断">为什么要中断</h4><p>引入中断机制后，CPU可以与其他设备并行工作，能有效**<span style='color: red'>提高CPU的利用率</span><strong>，改善系统性能，</strong><span style='color: red'>支持系统的异步</span>**操作。</p><h4 id="中断的分类">中断的分类</h4><ol><li>同步中断（内部中断或异常）</li><li>异步中断（外部中断）<ol><li>外部可屏蔽中断</li><li>外部不可屏蔽中断</li></ol></li></ol><h4 id="引起中断的原因">引起中断的原因</h4><ol><li>认为设置中断</li><li>程序性事故</li><li>硬件固件</li><li>I/O设备</li><li>外部事件</li></ol><h5 id="中断响应">中断响应</h5><ol><li>响应中断的条件</li><li>响应中断的时机</li></ol><h5 id="中断的处理">中断的处理</h5><img src="images/操作系统-进程管理/image-20211210151450814.png" alt="image-20211210151450814" style="zoom:50%;" /><h3 id="时钟管理">时钟管理</h3><h3 id="系统调佣">系统调佣</h3><h2 id="进程同步">进程同步</h2><h2 id="进程通信">进程通信</h2><h2 id="线程">线程</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> 操作系统概论 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Excel 公式中使用嵌套函数</title>
-      <link href="/2021/12/06/Excel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
-      <url>/2021/12/06/Excel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</url>
-      
-        <content type="html"><![CDATA[<p>将一个函数作为另一个函数的参数称之为嵌套函数。Excel 中最多可以嵌套 64 层函数。</p><p>以下公式根据学生的得分区间给予一个综合评分，其中使用到了嵌套的 IF 函数。</p><span id="more"></span><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=IF(B2&gt;=90,&quot;优&quot;,IF(B2&gt;=75,&quot;良&quot;,IF(B2&gt;=60,&quot;及格&quot;,&quot;差&quot;)))</span><br></pre></td></tr></table></figure><p>上述公式中总计嵌套了 3 层 IF 函数。嵌套的部分作为 IF 函数判断错误部分进行二次、三次判断。将学生分数以60分、75分和90分分为三个档次进行评分。</p><p><mark>这里是重点</mark></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Excel </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
   
   
 </search>
