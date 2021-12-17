@@ -337,6 +337,9 @@ _single underscores_
 **double asterisks**
 
 __double underscores__
+
+==标签==
+***加粗斜体组合***
 ```
 
 会转成：
@@ -348,6 +351,10 @@ _single underscores_
 **double asterisks**
 
 __double underscores__
+
+***加粗斜体组合***
+
+==标签==
 
 但是**如果你的 `\*` 和 `_` 两边都有空白的话，它们就只会被当成普通的符号**。
 
